@@ -2,10 +2,17 @@ aiohttp==3.8.4
 aiosignal==1.3.1
 async-timeout==4.0.2
 attrs==22.2.0
+boto3==1.26.92
+botocore==1.29.92
 charset-normalizer==3.1.0
 discord==2.2.2
 discord.py @ git+https://github.com/Rapptz/discord.py.git@879c8b9340f882b961db00de95977f3cf47c2305
 frozenlist==1.3.3
 idna==3.4
+jmespath==1.0.1
 multidict==6.0.4
+python-dateutil==2.8.2
+s3transfer==0.6.0
+six==1.16.0
+urllib3==1.26.15
 yarl==1.8.2

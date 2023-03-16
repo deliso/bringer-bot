@@ -1,9 +1,19 @@
 import json
 import discord
 import os
+import boto3
 
-
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+S3_BUCKET_NAME = os.environ['S3_BUCKET_NAME']
 TOKEN = os.environ['DISCORD_BOT_TOKEN']
+
+s3_client = boto3.client(
+    's3',
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+)
+
 
 # Initialization
 def create_discord_bot():
@@ -19,21 +29,19 @@ discord_bot = create_discord_bot()
 shopping_list_file = "shopping_list.json"
 
 # Load the shopping list from file
-
-
 def load_shopping_list():
     try:
+        s3_client.download_file(S3_BUCKET_NAME, shopping_list_file, shopping_list_file)
         with open(shopping_list_file, "r") as f:
             return json.load(f)
-    except FileNotFoundError:
+    except Exception:
         return []
 
 # Save the shopping list to file
-
-
 def save_shopping_list(shopping_list):
     with open(shopping_list_file, "w") as f:
         json.dump(shopping_list, f)
+    s3_client.upload_file(shopping_list_file, S3_BUCKET_NAME, shopping_list_file)
 
 
 # Load the shopping list
